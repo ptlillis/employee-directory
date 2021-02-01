@@ -12,17 +12,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stevetrilogy/unit10hw.git"
+    "url": "git+https://github.com/ptlillis/homework-week-10-employee-directory.git"
   },
   "author": "peter lillis",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/stevetrilogy/unit10hw/issues"
-  },
   "homepage": "https://github.com/stevetrilogy/unit10hw#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "inquirer": "^6.5.2"
+    "inquirer": "^6.5.2",
+    "path": "^0.12.7",
+    "render": "^0.1.4"
   },
   "devDependencies": {
     "jest": "^24.8.0"
