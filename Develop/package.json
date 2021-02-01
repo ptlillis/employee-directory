@@ -24,7 +24,7 @@
     "render": "^0.1.4"
   },
   "devDependencies": {
-    "jest": "^24.8.0"
+    "jest": "^24.9.0"
   },
   "keywords": [
     "employee-directory"

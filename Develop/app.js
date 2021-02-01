@@ -1,3 +1,5 @@
+// adding classes and node packages
+
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -5,25 +7,24 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
+// for the creation of the new HTML page inside the new output folder
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
+// a constant variable to define the htmlRenderer
+
 const render = require("./lib/htmlRenderer");
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
+// create empty employee data array
 
 const Employees = [];
-let pageRendered = render(Employees)
 
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
+// create initial questions for all employee prompts with input validation
 
 const initQ = [{
     type: "input",
-    message: "Enter name: ",
+    message: "Enter manager name: ",
     name: "name",
     validate: nameCheck => {
         if(nameCheck){
@@ -61,6 +62,8 @@ const initQ = [{
 }
 ]
 
+// create questions only for manager with input validation
+
 const managerQ = [{
     type: "input",
     message: "Enter the office number: ",
@@ -77,6 +80,8 @@ const managerQ = [{
     }
 }]
 
+// create questions only for intern with input validation
+
 const internQ = [{
     type: "input",
     message: "What school do you attend?",
@@ -90,6 +95,8 @@ const internQ = [{
     }
 }]
 
+// create questions only for engineer with input validation
+
 const engineerQ = [{
     type: "input",
     message: "What is your GitHub name?",
@@ -102,6 +109,8 @@ const engineerQ = [{
         }
     }
 }]
+
+// pre-determine the length of the Employee array based on user input, with input validation
 
 const teamSizeQ = [{
     type: "input",
@@ -119,12 +128,20 @@ const teamSizeQ = [{
     }
 }]
 
+// create a new role for each member of the team
+
 const newRole = [{
     type: "list",
     message: "What role does this team member play? ",
     choices: ["Intern", "Engineer", "Manager"],
-    name: "role"
+    name: "role",
 }]
+
+// variable for a render function using the Employees array
+
+let pageRendered = render(Employees)
+
+// asynchronus function to include question rounds for each in order depending on user choices
 
 async function init(){
     console.log("Please provide Team Manager information")
@@ -132,12 +149,16 @@ async function init(){
     let firstQ = await inquirer.prompt(initQ)
     let secondQ = await inquirer.prompt(managerQ)
 
-    let newManager = new Manager(firstQ.name, firstQ.id, firstQ.email, secondQ.officeNumber)
+    var newManager = new Manager(firstQ.name, firstQ.id, firstQ.email, secondQ.officeNumber)
     Employees.push(newManager)
 
-    let teamSize = await inquirer.prompt(teamSizeQ)
+    let teamSize = await inquirer.prompt(teamLength)
+
+// my application stops at this point! I am missing my error!!
 
     console.log("Tell us about your team members: ")
+
+// loop through team size and determine which role was inputted by the user
 
     for (let i = 0; i < teamSize.teamLength; i++) {
         let role = await inquirer.prompt(newRole)
@@ -159,6 +180,8 @@ async function init(){
     writeFile()
 }
 
+// function to write the file and / or create the OUTPUT_DIR if it does not already exist
+
 function writeFile() {
     if (!fs.existsSync(OUTPUT_DIR)) {
         fs.mkdirSync(OUTPUT_DIR);
@@ -168,19 +191,3 @@ function writeFile() {
 }
 
 init();
-
-// After you have your html, you're now ready to create an HTML file using the HTML
-// returned from the `render` function. Now write it to a file named `team.html` in the
-// `output` folder. You can use the variable `outputPath` above target this location.
-// Hint: you may need to check if the `output` folder exists and create it if it
-// does not.
-
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
