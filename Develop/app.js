@@ -1,3 +1,5 @@
+// adding classes from other sheets + required node packages
+
 const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
@@ -6,15 +8,22 @@ const path = require("path");
 const fs = require("fs");
 const validator = require("email-validator")
 
+// determining official path for new HTML page
+
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-const { create } = require("domain");
+
+// empty array of employees to be pushed into
 
 const Employees = [];
 
+// initializing create manager function to start the application
+
 createManager()
+
+// creating the create manager function to read user inputs and add to each manager object
 
 function createManager(){
     console.log("Welcome to the employee directory generator")
@@ -78,6 +87,8 @@ function createManager(){
 })
 }
 
+// creating the employees function called above, including switch statement depending on options chosen)
+
 function createEmployees() {
     inquirer.prompt([{
         type: "list",
@@ -100,6 +111,8 @@ function createEmployees() {
         }
     })
 }
+
+// creating the create engineer function, to pass user entry back to the new engineer object
 
 function createEngineer() {
     console.log("We require some information on this engineer to proceed.")
@@ -162,6 +175,8 @@ function createEngineer() {
 })
 }
 
+// creating intern function as with above
+
 function createIntern() {
     console.log("We require further information on the intern before proceeding.")
     inquirer.prompt([{
@@ -222,6 +237,8 @@ function createIntern() {
     createEmployees()
 })
 }
+
+// writing function to render new page
 
 function renderEmployees() {
     if(!fs.existsSync(OUTPUT_DIR)) {
