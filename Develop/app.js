@@ -112,21 +112,21 @@ const engineerQ = [{
 
 // pre-determine the length of the Employee array based on user input, with input validation
 
-const teamSizeQ = [{
-    type: "input",
-    message: "How many employees in your business?",
-    name: "teamLength",
-    validate: sizeCheck => {
-        if(!isNaN(sizeCheck)) {
-            if(!(teamCheck === "")) {
-                return true
-            }
-            console.log("Number of employees is required to start.")
-        } else {
-            console.log("The number of employees is required to run this program.")
-        }
-    }
-}]
+// const teamSizeQ = [{
+//     type: "input",
+//     message: "How many employees in your business?",
+//     name: "teamLength",
+//     validate: sizeCheck => {
+//         if(!isNaN(sizeCheck)) {
+//             if(!(teamCheck === "")) {
+//                 return true
+//             }
+//             console.log("Number of employees is required to start.")
+//         } else {
+//             console.log("The number of employees is required to run this program.")
+//         }
+//     }
+// }]
 
 // create a new role for each member of the team
 
@@ -152,7 +152,7 @@ async function init(){
     var newManager = new Manager(firstQ.name, firstQ.id, firstQ.email, secondQ.officeNumber)
     Employees.push(newManager)
 
-    let teamSize = await inquirer.prompt(teamLength)
+    // let teamSize = await inquirer.prompt(teamSizeQ)
 
 // my application stops at this point! I am missing my error!!
 
@@ -160,7 +160,7 @@ async function init(){
 
 // loop through team size and determine which role was inputted by the user
 
-    for (let i = 0; i < teamSize.teamLength; i++) {
+    for (let i = 0; i < Employees; i++) {
         let role = await inquirer.prompt(newRole)
         var initialQ = await inquirer.prompt(initQ)
 
@@ -176,7 +176,7 @@ async function init(){
         }
     }
 
-    pageRendered
+    // pageRendered
     writeFile()
 }
 
@@ -186,7 +186,7 @@ function writeFile() {
     if (!fs.existsSync(OUTPUT_DIR)) {
         fs.mkdirSync(OUTPUT_DIR);
     }
-    fs.writeFile(outputPath, pageRendered, (error) =>
+    fs.writeFile(outputPath, render(Employees), (error) =>
         error ? console.error(error) : console.log("You did it! Page rendered!"))
 }
 
