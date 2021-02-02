@@ -28,5 +28,8 @@
   },
   "keywords": [
     "employee-directory"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/ptlillis/homework-week-10-employee-directory/issues"
+  }
 }
