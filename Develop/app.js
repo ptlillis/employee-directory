@@ -22,7 +22,11 @@ const Employees = [];
 
 // create initial questions for all employee prompts with input validation
 
-const initQ = [{
+function createManager(){
+    console.log("Welcome to the employee directory generator")
+}
+
+inquirer.prompt([{
     type: "input",
     message: "Enter manager name: ",
     name: "name",
@@ -52,15 +56,67 @@ const initQ = [{
     type: "input",
     message: "Enter employee email address: ",
     name: "email",
-    validate: emailCheck => {
-        if(emailCheck){
+    validate: (email) => {
+        if(validator.validate(email === true)){
             return true
         } else {
             console.log("Employee email required.")
         }    
     }
+},
+{
+    type: "input",
+    message: "Enter the office number: ",
+    name: "officeNumber",
+    validate: numberCheck => {
+        if (!isNaN(numberCheck)) {
+            if (!(numberCheck === "")) {
+                return true 
+            }
+            console.log("We require a valid phone number for all managers.")
+        } else {
+            console.log("This field is required, please include a valid contact number.")
+        }
+    }
 }
-]
+])
+.then(function(answers) {
+    const manager = new Manager(answers.name, answers.id, answers.email, answers.officeNumber)
+    Employees.push(manager)
+    createEmployees()
+})
+
+function createEmployees() {
+    inquirer.prompt([{
+        type: "list",
+        message: "Are you adding more members to your team today?",
+        choices: ["Engineer", "Intern", "No more team members"],
+        name: "newteam"
+    }])
+    .then(function(answers) {
+        switch(answers.newteam) {
+            case "Engineer":
+                createEngineer()
+                break
+            case "Intern":
+                createIntern()
+                break
+            case "No more team members":
+                renderEmployees()
+                break
+            default: renderEmployees()
+        }
+    })
+}
+
+function createEngineer() {
+    console.log("We require some information on this engineer to proceed.")
+    inquirer.prompt([{
+        type: "input",
+        message: "What is this engineer's name?",
+        name: "name",
+    }])
+}
 
 // create questions only for manager with input validation
 
